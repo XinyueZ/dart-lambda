@@ -5,3 +5,4 @@
 .packages
 pubspec.lock
 Test.txt
+config.dart
