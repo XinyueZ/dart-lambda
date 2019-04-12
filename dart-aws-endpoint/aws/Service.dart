@@ -17,19 +17,22 @@ import 'config.dart';
 
 class Gateway {
   String _token;
+  String _area;
 
-  Gateway(this._token);
+  Gateway(this._token, this._area);
 
   HttpClient _createHttpClient() => HttpClient();
 
   Uri _createUri(String endpoint, String data) => Uri.https(endpoint, data);
 
   Future<HttpClientRequest> _createRequest(String endpoint, String data) =>
-      _createHttpClient().getUrl(_createUri(endpoint, data));
+      _createHttpClient().postUrl(_createUri(endpoint, data));
 
   Future<HttpClientResponse> _getResponse(HttpClientRequest request) {
     request.headers.add("Authorization", _token);
+    request.headers.add("Accept", "application/json");
     request.headers.add("Content-Type", "application/json");
+    request.write('{"serviceAreaId":"$_area"}');
     Future<HttpClientResponse> response = request.close();
     return response;
   }

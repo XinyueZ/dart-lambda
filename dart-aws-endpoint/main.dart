@@ -11,7 +11,8 @@ void main() async {
     print("$username =>");
     print("JWT-Token: ${session.accessToken.jwtToken}");
 
-    Gateway gateway = Gateway(session.accessToken.jwtToken);
+    Gateway gateway = Gateway(session.accessToken.jwtToken, area);
+
     List<Vehicle> list = await gateway.getVehicles();
 
     print("List =>");
