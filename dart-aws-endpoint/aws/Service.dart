@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
@@ -40,15 +41,41 @@ class Gateway {
   /**
    * Define APIs
    */
-  Future<List<Vehicle>> getVehicles() async {
+  Future<List<Vehicle>> getCars() async {
     final req = await _createRequest(endpoint, data);
     final res = await _getResponse(req);
     final ret = await res
         .transform(DecoderHelper.getUtf8Decoder())
         .join(); // understand utf-8
 
-    final itor = json.decode(ret);
-    final list = itor.map((i) => Vehicle.fromJson(i)).toList();
-    return Future.value(list);
+    final feedsMap = DecoderHelper.getJsonDecoder().convert(ret);
+
+    final List<Vehicle> carsList = List<Vehicle>();
+
+    final List<dynamic> list = feedsMap["vehicles"];
+    list?.forEach((vehicle) {
+      final LinkedHashMap<String, dynamic> location = vehicle["location"];
+      final List<dynamic> coordinates = location["coordinates"];
+      num lat = 0;
+      num lng = 0;
+      if (coordinates != null) {
+        lat = coordinates[0];
+        lng = coordinates[1];
+      }
+      Vehicle car = Vehicle(vehicle["id"], lat, lng);
+
+      List<dynamic> waypointsMap = vehicle["waypoints"];
+      waypointsMap?.forEach((waypoint) {
+        Map<String, dynamic> stopList = waypoint["stop"];
+        stopList?.values?.forEach((stop) {
+          List<dynamic> locationList = stop["coordinates"];
+          car.addStop(Stop(locationList[0], locationList[1]));
+        });
+      });
+
+      carsList?.add(car);
+    });
+
+    return Future.value(carsList);
   }
 }

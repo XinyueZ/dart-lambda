@@ -1,15 +1,45 @@
+class VehicleLocation {
+  final num lat;
+  final num lng;
+
+  VehicleLocation(this.lat, this.lng);
+
+  @override
+  String toString() => "[lat: $lat, lng: $lng]";
+}
+
+class Stop {
+  final num lat;
+  final num lng;
+
+  Stop(this.lat, this.lng);
+
+  VehicleLocation get vehicleLocation => VehicleLocation(lat, lng);
+
+  @override
+  String toString() => vehicleLocation.toString();
+}
+
 class Vehicle {
-  final String location;
-  final DateTime timestamps;
+  final String id;
+  final num lat;
+  final num lng;
+  final List<Stop> stops = List<Stop>();
 
-  Vehicle(this.location, this.timestamps);
+  VehicleLocation get vehicleLocation => VehicleLocation(lat, lng);
 
-  Vehicle.fromJson(Map<String, dynamic> json)
-      : location = json['location.coordinates'],
-        timestamps = json['location.timestamps'];
+  Vehicle(this.id, this.lat, this.lng);
 
-  Map<String, dynamic> toJson() => {
-        'location': location,
-        'timestamps': timestamps,
-      };
+  void addStop(Stop stop) {
+    stops.add(stop);
+  }
+
+  @override
+  String toString() {
+    final List<String> stopsList = List<String>();
+    stops.forEach((stop) {
+      stopsList.add(stop.toString());
+    });
+    return "[id: $id, ${vehicleLocation.toString()}, stops(${stops.length}): ${stopsList.join("=>")}]";
+  }
 }
