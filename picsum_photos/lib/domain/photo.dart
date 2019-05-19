@@ -22,15 +22,25 @@ class Photo {
   String url;
   String downloadUrl;
   Uri _thumbnail;
+  Uri _webLocation;
+  Uri _downloadLocation;
 
   Photo(this.id, this.author, this.width, this.height, this.url,
       this.downloadUrl) {
     _thumbnail = thumbnail;
+    _webLocation = webLocation;
+    _downloadLocation = downloadLocation;
   }
 
-  Uri get webLocation => Uri.parse(url);
+  Uri get webLocation {
+    if (_webLocation != null) return _webLocation;
+    return Uri.parse(url);
+  }
 
-  Uri get downloadLocation => Uri.parse(downloadUrl);
+  Uri get downloadLocation {
+   if (_downloadLocation != null) return _downloadLocation;
+    return Uri.parse(downloadUrl);
+  }
 
   Uri get thumbnail {
     if (_thumbnail != null) return _thumbnail;
