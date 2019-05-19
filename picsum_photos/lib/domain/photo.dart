@@ -72,6 +72,6 @@ class Photo {
       map["author"] ?? nullPlaceholder,
       map["width"] ?? -1,
       map["height"] ?? -1,
-      map["url"] ?? nullPlaceholder,
-      map["download_url"] ?? nullPlaceholder);
+      map["url"] ?? nullUri,
+      map["download_url"] ?? nullUri);
 }
