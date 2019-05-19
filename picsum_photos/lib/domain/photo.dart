@@ -21,15 +21,19 @@ class Photo {
   int height;
   String url;
   String downloadUrl;
+  Uri _thumbnail;
 
   Photo(this.id, this.author, this.width, this.height, this.url,
-      this.downloadUrl);
+      this.downloadUrl) {
+    _thumbnail = thumbnail;
+  }
 
   Uri get webLocation => Uri.parse(url);
 
   Uri get downloadLocation => Uri.parse(downloadUrl);
 
   Uri get thumbnail {
+    if (_thumbnail != null) return _thumbnail;
     //
     //Download is "https://picsum.photos/id/121/1600/1067"
     //Thumbnail shall be  "https://picsum.photos/id/121/$thumbnailSize/$thumbnailSize"
