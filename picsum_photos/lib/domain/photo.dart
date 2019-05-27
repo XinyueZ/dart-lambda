@@ -75,16 +75,16 @@ class Photo {
   }
 
   Uri getBlur(int blur) {
-    blur = adjustBlur(blur);
+    blur = _adjustBlur(blur);
     return Uri.parse("$downloadUrl?blur=$blur");
   }
 
   Uri getGrayscaleBlur(int blur) {
-    blur = adjustBlur(blur);
+    blur = _adjustBlur(blur);
     return Uri.parse("$downloadUrl?grayscale&blur=$blur");
   }
 
-  int adjustBlur(int blur) {
+  int _adjustBlur(int blur) {
     if (blur > 10)
       blur = 10;
     else if (blur < 1) blur = 1;
