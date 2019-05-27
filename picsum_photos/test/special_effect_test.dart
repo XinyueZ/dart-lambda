@@ -2,10 +2,7 @@ import 'package:picsum_photos/domain/photo.dart';
 import 'package:test_api/test_api.dart';
 
 void main() {
-  group("special effects test-suit", () {
-    test("should create the special effects based on download-url of a photo",
-        () {
-//      {
+  //      {
 //      "id": "121",
 //      "author": "Radio Pink",
 //      "width": 1600,
@@ -13,13 +10,17 @@ void main() {
 //      "url": "https://unsplash.com/photos/p-bkdO43shE",
 //      "download_url": "https://picsum.photos/id/121/1600/1067"
 //      },
-      Photo photo = Photo(
-          "121",
-          "Radio Pink",
-          1600,
-          1067,
-          "https://unsplash.com/photos/p-bkdO43shE",
-          "https://picsum.photos/id/121/1600/1067");
+  Photo photo = Photo(
+      "121",
+      "Radio Pink",
+      1600,
+      1067,
+      "https://unsplash.com/photos/p-bkdO43shE",
+      "https://picsum.photos/id/121/1600/1067");
+
+  group("special effects test-suit", () {
+    test("should create the special effects based on download-url of a photo",
+        () {
       expect(Uri.parse("https://picsum.photos/id/121/1600/1067?blur=3"),
           photo.getBlur(3));
       expect(Uri.parse("https://picsum.photos/id/121/1600/1067?grayscale"),
@@ -30,21 +31,6 @@ void main() {
     });
 
     test("should create the blur effect max under 10", () {
-//      {
-//      "id": "121",
-//      "author": "Radio Pink",
-//      "width": 1600,
-//      "height": 1067,
-//      "url": "https://unsplash.com/photos/p-bkdO43shE",
-//      "download_url": "https://picsum.photos/id/121/1600/1067"
-//      },
-      Photo photo = Photo(
-          "121",
-          "Radio Pink",
-          1600,
-          1067,
-          "https://unsplash.com/photos/p-bkdO43shE",
-          "https://picsum.photos/id/121/1600/1067");
       expect(Uri.parse("https://picsum.photos/id/121/1600/1067?blur=10"),
           photo.getBlur(10));
       expect(
@@ -58,21 +44,6 @@ void main() {
     });
 
     test("should create the blur effect min above 1", () {
-//      {
-//      "id": "121",
-//      "author": "Radio Pink",
-//      "width": 1600,
-//      "height": 1067,
-//      "url": "https://unsplash.com/photos/p-bkdO43shE",
-//      "download_url": "https://picsum.photos/id/121/1600/1067"
-//      },
-      Photo photo = Photo(
-          "121",
-          "Radio Pink",
-          1600,
-          1067,
-          "https://unsplash.com/photos/p-bkdO43shE",
-          "https://picsum.photos/id/121/1600/1067");
       expect(Uri.parse("https://picsum.photos/id/121/1600/1067?blur=1"),
           photo.getBlur(-1));
       expect(
