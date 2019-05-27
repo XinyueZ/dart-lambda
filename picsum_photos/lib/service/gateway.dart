@@ -38,8 +38,8 @@ class Service extends Gateway {
   Service(IHttpClientProvider clientProvider) : super(clientProvider);
 
   Future<PhotoList> getPhotoList(int page, int limit,
-      {String host = apiHost,
-      String endpoint = apiEndpoint,
+      {String host = API_HOST,
+      String endpoint = API_END_POINT,
       String method = "GET"}) async {
     final String endpointPageLimit = sprintf(endpoint, [page, limit]);
     final HttpClientRequest req =

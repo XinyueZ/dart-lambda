@@ -7,10 +7,10 @@ import 'package:sprintf/sprintf.dart';
 main() async {
   final Service service = Service(HttpClientProvider());
 
-  for (int page = startPage; page < 20; page++) {
-    final PhotoList photoList = await service.getPhotoList(page, defaultLimit);
+  for (int page = START_PAGE; page < 20; page++) {
+    final PhotoList photoList = await service.getPhotoList(page, DEFAULT_LIMIT);
     print("===========================================================");
-    print(sprintf("page: %d (0 based index), limit: %d", [page, defaultLimit]));
+    print(sprintf("page: %d (0 based index), limit: %d", [page, DEFAULT_LIMIT]));
     print("===========================================================");
     print(photoList);
   }

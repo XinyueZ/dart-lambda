@@ -12,7 +12,8 @@ import 'package:picsum_photos/config.dart';
 
 import 'package:sprintf/sprintf.dart';
 
-const thumbnailSize = 200;
+const THUMBNAIL_SIZE = 200;
+const BLUR_DEFAULT = 5;
 
 class Photo {
   final String id;
@@ -24,21 +25,27 @@ class Photo {
   Uri _thumbnail;
   Uri _webLocation;
   Uri _downloadLocation;
+  Uri _grayscale;
+  Uri _blur;
+  Uri _grayscaleBlur;
 
   Photo(this.id, this.author, this.width, this.height, this.url,
       this.downloadUrl) {
     _thumbnail = thumbnail;
     _webLocation = webLocation;
     _downloadLocation = downloadLocation;
+    _grayscale = grayscale;
+    _blur = getBlur(BLUR_DEFAULT);
+    _grayscaleBlur = getGrayscaleBlur(BLUR_DEFAULT);
   }
 
   factory Photo.from(Map<String, dynamic> map) => Photo(
-      map["id"] ?? nullPlaceholder,
-      map["author"] ?? nullPlaceholder,
+      map["id"] ?? NULL_PLACEHOLDER,
+      map["author"] ?? NULL_PLACEHOLDER,
       map["width"] ?? -1,
       map["height"] ?? -1,
-      map["url"] ?? nullUri,
-      map["download_url"] ?? nullUri);
+      map["url"] ?? NULL_URI,
+      map["download_url"] ?? NULL_URI);
 
   Uri get webLocation {
     if (_webLocation != null) return _webLocation;
@@ -61,9 +68,25 @@ class Photo {
     final widthSlash = removeHeightSlashToEnd.lastIndexOf("/"); //find: /1600
     final removeWidthSlashToEnd =
         removeHeightSlashToEnd.substring(0, widthSlash);
-    final thumbnailUrl = "$removeWidthSlashToEnd/$thumbnailSize/$thumbnailSize";
+    final thumbnailUrl =
+        "$removeWidthSlashToEnd/$THUMBNAIL_SIZE/$THUMBNAIL_SIZE";
 
     return Uri.parse(thumbnailUrl);
+  }
+
+  Uri get grayscale {
+    if (_grayscale != null) return _grayscale;
+    return Uri.parse("$downloadUrl?grayscale");
+  }
+
+  Uri getBlur(int blur) {
+    if (_blur != null) return _blur;
+    return Uri.parse("$downloadUrl?&blur=$blur");
+  }
+
+  Uri getGrayscaleBlur(int blur) {
+    if (_grayscaleBlur != null) return _grayscaleBlur;
+    return Uri.parse("$downloadUrl?grayscale&blur=$blur");
   }
 
   int get originWidth => width;
