@@ -97,6 +97,15 @@ class Photo {
 
   @override
   String toString() => sprintf(
-      "id:%s, author:%s, width:%d, height:%d, url:%s, downloadUrl:%s",
-      [id, author, width, height, url, downloadUrl]);
+          "id:%s, author:%s, width:%d, height:%d, url:%s, downloadUrl:%s, thumbnail:%s, grayscale:%s",
+          [
+            id,
+            author,
+            width,
+            height,
+            url,
+            downloadUrl,
+            thumbnail.toString(),
+            grayscale.toString()
+          ]);
 }
