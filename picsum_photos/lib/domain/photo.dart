@@ -13,7 +13,6 @@ import 'package:picsum_photos/config.dart';
 import 'package:sprintf/sprintf.dart';
 
 const THUMBNAIL_SIZE = 200;
-const BLUR_DEFAULT = 5;
 
 class Photo {
   final String id;
@@ -26,8 +25,6 @@ class Photo {
   Uri _webLocation;
   Uri _downloadLocation;
   Uri _grayscale;
-  Uri _blur;
-  Uri _grayscaleBlur;
 
   Photo(this.id, this.author, this.width, this.height, this.url,
       this.downloadUrl) {
@@ -35,8 +32,6 @@ class Photo {
     _webLocation = webLocation;
     _downloadLocation = downloadLocation;
     _grayscale = grayscale;
-    _blur = getBlur(BLUR_DEFAULT);
-    _grayscaleBlur = getGrayscaleBlur(BLUR_DEFAULT);
   }
 
   factory Photo.from(Map<String, dynamic> map) => Photo(
@@ -80,13 +75,20 @@ class Photo {
   }
 
   Uri getBlur(int blur) {
-    if (_blur != null) return _blur;
-    return Uri.parse("$downloadUrl?&blur=$blur");
+    blur = adjustBlur(blur);
+    return Uri.parse("$downloadUrl?blur=$blur");
   }
 
   Uri getGrayscaleBlur(int blur) {
-    if (_grayscaleBlur != null) return _grayscaleBlur;
+    blur = adjustBlur(blur);
     return Uri.parse("$downloadUrl?grayscale&blur=$blur");
+  }
+
+  int adjustBlur(int blur) {
+    if (blur > 10)
+      blur = 10;
+    else if (blur < 1) blur = 1;
+    return blur;
   }
 
   int get originWidth => width;
