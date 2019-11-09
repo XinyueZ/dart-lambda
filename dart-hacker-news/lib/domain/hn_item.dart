@@ -25,7 +25,7 @@ class HNStory extends HNItem {
   final String title;
   final Uri uri;
   final num score;
-  final List kids;
+  final List<dynamic> kids;
   final num descendants;
 
   HNStory(id, by, time, type, text, this.title, this.uri, this.score, this.kids,

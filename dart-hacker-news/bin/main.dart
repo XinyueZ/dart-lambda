@@ -52,5 +52,5 @@ void main() async {
       }
     }
   });
-  print("========> all stories");
+  print("========> ${stories.length} stories");
 }
