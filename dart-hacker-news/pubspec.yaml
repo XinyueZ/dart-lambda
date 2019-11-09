@@ -1,0 +1,17 @@
+name: dart_hacker_news
+description: A sample command-line application.
+# version: 1.0.0
+# author: xinyuezhao <dev.xinyue.zhao@gmail.com>
+
+environment:
+  sdk: '>=2.2.0 <3.0.0'
+
+#dependencies:
+#  path: ^1.4.1
+
+dependencies:
+  pedantic: ^1.0.0
+  sprintf: ^4.0.0
+  mockito: ^4.0.0
+  test: ^1.6.3
+  dio: ^3.0.4
