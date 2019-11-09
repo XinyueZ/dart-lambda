@@ -3,6 +3,7 @@ import 'package:dart_hacker_news/decoder_helper.dart';
 import 'package:dart_hacker_news/domain/hn_item.dart';
 import 'package:dio/dio.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:dart_hacker_news/domain/extensions.dart';
 
 void main() async {
   final BaseOptions options = BaseOptions(
@@ -23,8 +24,8 @@ void main() async {
   /**
    * Read list of elements (id)
    */
-  List<HNElement> elements = List();
-  response = await dio.get(STORIES);
+  final List<HNElement> elements = List();
+  response = await dio.get(TOP_STORIES_ID_LIST);
   final List<dynamic> feedsMap =
       DecoderHelper.getJsonDecoder().convert(response.toString());
   feedsMap.forEach((elementId) {
@@ -37,20 +38,12 @@ void main() async {
   /**
    * Build story-list
    */
-  List<HNStory> stories = List();
-  await Future.forEach(elements, (element) async {
-    final String getPath = sprintf(STORY, [element.toString()]);
-    final Response response = await dio.get(getPath);
-    if (response != null) {
-      final Map<String, dynamic> feedsMap =
-          DecoderHelper.getJsonDecoder().convert(response.toString());
-
-      if (feedsMap != null) {
-        final HNStory story = HNStory.from(feedsMap);
-        stories.add(story);
-        print("Story: ${story.toString()}");
-      }
-    }
-  });
+  final List<HNStory> stories = await elements.buildStories(dio);
   print("========> ${stories.length} stories");
+
+  /**
+   * Build comments for stories
+   */
+  final List<HNComment> comments = await stories.buildComments(dio);
+  print("========> ${comments.length} comments");
 }

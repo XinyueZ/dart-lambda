@@ -17,20 +17,20 @@ class HNItem extends HNElement {
   final num time;
   final HNType type;
   final String text;
+  final List<dynamic> kids;
 
-  HNItem(id, this.by, this.time, this.type, this.text) : super(id);
+  HNItem(id, this.by, this.time, this.type, this.text, this.kids) : super(id);
 }
 
 class HNStory extends HNItem {
   final String title;
   final Uri uri;
   final num score;
-  final List<dynamic> kids;
   final num descendants;
 
-  HNStory(id, by, time, type, text, this.title, this.uri, this.score, this.kids,
+  HNStory(id, by, time, type, text, kids, this.title, this.uri, this.score,
       this.descendants)
-      : super(id, by, time, type, text);
+      : super(id, by, time, type, text, kids);
 
   factory HNStory.from(Map<String, dynamic> map) => HNStory(
       map["id"],
@@ -38,10 +38,10 @@ class HNStory extends HNItem {
       map["time"],
       from(map["type"]),
       map["text"],
+      map["kids"] ?? List(),
       map["title"],
       map["url"] != null ? Uri.parse(map["url"]) : Uri.parse(NULL_URI),
       map["score"],
-      map["kids"] ?? List(),
       map["descendants"] ?? NULL_NUM);
 
   @override
@@ -54,6 +54,21 @@ class HNStory extends HNItem {
 class HNComment extends HNItem {
   final num parentId;
 
-  HNComment(id, by, time, type, text, this.parentId)
-      : super(id, by, time, type, text);
+  HNComment(id, by, time, type, text, kids, this.parentId)
+      : super(id, by, time, type, text, kids);
+
+  factory HNComment.from(Map<String, dynamic> map) => HNComment(
+      map["id"],
+      map["by"] ?? NULL_UNKNOWN,
+      map["time"],
+      from(map["type"]),
+      map["text"] ?? NULL_PLACEHOLDER,
+      map["kids"] ?? List(),
+      map["parent"] ?? NULL_NUM);
+
+  @override
+  String toString() {
+    final String string = sprintf("[%s] by %s: %s", [_id, by, text]);
+    return string;
+  }
 }
