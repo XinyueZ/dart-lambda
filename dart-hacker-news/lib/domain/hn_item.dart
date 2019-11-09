@@ -34,12 +34,12 @@ class HNStory extends HNItem {
 
   factory HNStory.from(Map<String, dynamic> map) => HNStory(
       map["id"],
-      map["by"],
+      map["by"] ?? NULL_UNKNOWN,
       map["time"],
       from(map["type"]),
-      map["text"],
+      map["text"] ?? NULL_PLACEHOLDER,
       map["kids"] ?? List(),
-      map["title"],
+      map["title"] ?? NULL_PLACEHOLDER,
       map["url"] != null ? Uri.parse(map["url"]) : Uri.parse(NULL_URI),
       map["score"],
       map["descendants"] ?? NULL_NUM);
