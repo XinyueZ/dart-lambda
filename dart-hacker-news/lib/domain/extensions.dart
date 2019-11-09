@@ -32,8 +32,6 @@ extension HNStoryGenerator on List<HNElement> {
 
 extension HNCommentGenerator on HNItem {
   Future<List<HNComment>> buildComments(final Dio dio) async {
-    if (this.kids.isEmpty) return List();
-
     final List<HNComment> comments = List();
     await Future.forEach(this.kids, (kid) async {
       final String getPath = sprintf(CONTENT, [kid.toString()]);
@@ -44,13 +42,7 @@ extension HNCommentGenerator on HNItem {
         if (feedsMap != null) {
           final HNComment comment = HNComment.from(feedsMap);
           comments.add(comment);
-
-          if (comment.kids.isNotEmpty) {
-            final List<HNComment> nextComments =
-                await comment.buildComments(dio);
-            comments.addAll(nextComments);
-          }
-
+          comments.addAll(await comment.buildComments(dio));
           //Debug output
           print("Comment: ${comment.toString()}");
         }
