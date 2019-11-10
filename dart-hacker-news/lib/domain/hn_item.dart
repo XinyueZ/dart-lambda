@@ -12,7 +12,7 @@ class HNElement {
   String toString() => "$_id";
 }
 
-class HNItem extends HNElement {
+abstract class HNItem extends HNElement {
   final String by;
   final num time;
   final HNType type;
