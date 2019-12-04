@@ -15,24 +15,38 @@ void main() async {
   final Dio dio = Dio(options);
 
   /**
-   * Read max element (id)
+   * Read list of hnObjects (id) for jobs
    */
-  Response response = await dio.get(MAX_ITEM);
-  final String maxItemId = response.toString();
-  print("Max: $maxItemId");
-
-  /**
-   * Read list of hnObjects (id)
-   */
-  final List<HNElement> hnObjects = List();
-  response = await dio.get(TOP_STORIES_ID_LIST);
-  final List<dynamic> feedsMap =
+  List<HNElement> hnObjects = List();
+  Response response = await dio.get(JOB_STORIES_ID_LIST);
+  List<dynamic> feedsMap =
       DecoderHelper.getJsonDecoder().convert(response.toString());
   feedsMap.forEach((objId) {
     hnObjects.add(HNObject(objId));
   });
   hnObjects.forEach((obj) {
-    print("Element id: ${obj.toString()}");
+    print("Job object id: ${obj.toString()}");
+  });
+  print("========> ${hnObjects.length} jobs");
+
+  /**
+   * Read max element (id)
+   */
+  response = await dio.get(MAX_ITEM);
+  final String maxItemId = response.toString();
+  print("Max HN object: $maxItemId");
+
+  /**
+   *  Read list of hnObjects (id) for stories
+   */
+  hnObjects = List();
+  response = await dio.get(TOP_STORIES_ID_LIST);
+  feedsMap = DecoderHelper.getJsonDecoder().convert(response.toString());
+  feedsMap.forEach((objId) {
+    hnObjects.add(HNObject(objId));
+  });
+  hnObjects.forEach((obj) {
+    print("Story object id: ${obj.toString()}");
   });
 
   /**
