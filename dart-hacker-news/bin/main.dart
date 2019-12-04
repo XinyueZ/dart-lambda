@@ -22,23 +22,23 @@ void main() async {
   print("Max: $maxItemId");
 
   /**
-   * Read list of elements (id)
+   * Read list of hnObjects (id)
    */
-  final List<HNElement> elements = List();
+  final List<HNElement> hnObjects = List();
   response = await dio.get(TOP_STORIES_ID_LIST);
   final List<dynamic> feedsMap =
       DecoderHelper.getJsonDecoder().convert(response.toString());
-  feedsMap.forEach((elementId) {
-    elements.add(HNElement(elementId));
+  feedsMap.forEach((objId) {
+    hnObjects.add(HNObject(objId));
   });
-  elements.forEach((element) {
-    print("Element id: ${element.toString()}");
+  hnObjects.forEach((obj) {
+    print("Element id: ${obj.toString()}");
   });
 
   /**
    * Build story-list
    */
-  final List<HNStory> stories = await elements.buildStories(dio);
+  final List<HNStory> stories = await hnObjects.buildStories(dio);
   print("========> ${stories.length} stories");
 
   /**
