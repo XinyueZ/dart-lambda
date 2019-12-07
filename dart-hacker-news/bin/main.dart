@@ -27,7 +27,8 @@ void main() async {
   hnObjects.forEach((obj) {
     print("Job object id: ${obj.toString()}");
   });
-  print("========> ${hnObjects.length} jobs");
+  final List<HNJob> jobs = await hnObjects.buildJobs(dio);
+  print("========> ${jobs.length} jobs");
 
   /**
    * Read max element (id)
