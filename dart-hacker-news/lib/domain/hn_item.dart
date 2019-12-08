@@ -9,9 +9,7 @@ abstract class HNElement {
   HNElement(this.id);
 
   @override
-  String toString() {
-    return "$id";
-  }
+  String toString() => "$id";
 }
 
 class HNObject extends HNElement {
@@ -73,10 +71,7 @@ class HNStory extends HNItem with HNLink, HNScore, HNTitle {
       );
 
   @override
-  String toString() {
-    final String string = sprintf("[%s]: %s", [id, title]);
-    return string;
-  }
+  String toString() => sprintf("[%s]: %s", [id, title]);
 }
 
 class HNComment extends HNItem {
@@ -96,10 +91,7 @@ class HNComment extends HNItem {
       );
 
   @override
-  String toString() {
-    final String string = sprintf("[%s] by %s: %s", [id, by, text]);
-    return string;
-  }
+  String toString() => sprintf("[%s] by %s: %s", [id, by, text]);
 }
 
 class HNJob extends HNTextItem with HNLink, HNScore, HNTitle {
@@ -122,8 +114,5 @@ class HNJob extends HNTextItem with HNLink, HNScore, HNTitle {
       );
 
   @override
-  String toString() {
-    final String string = sprintf("[%s] job at %s: %s", [id, by, title]);
-    return string;
-  }
+  String toString() => sprintf("[%s] job at %s: %s", [id, by, title]);
 }

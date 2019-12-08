@@ -5,7 +5,7 @@ import '../config.dart';
 import '../decoder_helper.dart';
 import 'hn_item.dart';
 
-extension HNStoryGenerator on List<HNElement> {
+extension HNStoryGenerator on Iterable<HNElement> {
   Future<List<HNStory>> buildStories(final Dio dio) async {
     final List<HNStory> stories = List();
 
@@ -52,7 +52,7 @@ extension HNCommentGenerator on HNItem {
   }
 }
 
-extension HNCommentListGenerator on List<HNItem> {
+extension HNCommentListGenerator on Iterable<HNItem> {
   Future<List<HNComment>> buildComments(final Dio dio) async {
     final List<HNComment> comments = List();
     await Future.forEach(this, (HNItem hnItem) async {
@@ -63,7 +63,7 @@ extension HNCommentListGenerator on List<HNItem> {
   }
 }
 
-extension HNJobGenerator on List<HNElement> {
+extension HNJobGenerator on Iterable<HNElement> {
   Future<List<HNJob>> buildJobs(final Dio dio) async {
     final List<HNJob> jobs = List();
     await Future.forEach(this, (element) async {
@@ -74,11 +74,11 @@ extension HNJobGenerator on List<HNElement> {
             DecoderHelper.getJsonDecoder().convert(response.toString());
 
         if (feedsMap != null) {
-          final HNJob story = HNJob.from(feedsMap);
-          jobs.add(story);
+          final HNJob job = HNJob.from(feedsMap);
+          jobs.add(job);
 
           //Debug output
-          print("Job: ${story.toString()}");
+          print("Job: ${job.toString()}");
         }
       }
     });
