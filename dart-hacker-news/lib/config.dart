@@ -1,5 +1,6 @@
 const API_HOST = "https://hacker-news.firebaseio.com/v0";
 const TOP_STORIES_ID_LIST = "/topstories.json?print=pretty";
+const JOB_STORIES_ID_LIST = "/jobstories.json?print=pretty";
 const CONTENT = "/item/%s.json?print=pretty";
 const MAX_ITEM = "/maxitem.json?print=pretty";
 const PAGE_SIZE = 20;
