@@ -16,6 +16,12 @@ void createOnePartDataSet({Directory srcDir, Directory destDir}) {
     for (final FileSystemEntity underSubFile in underSub) {
       if (underSubFile is! File) {
         print("$underSubFile is not a file!");
+        if (underSubFile is Directory) {
+          createOnePartDataSet(
+            srcDir: underSubFile,
+            destDir: destDir,
+          );
+        }
         continue;
       }
       final File file = underSubFile as File;
